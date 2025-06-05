@@ -19,16 +19,30 @@ A Model Context Protocol (MCP) server that provides a clean interface for Perfor
 - Perforce command-line client (p4) installed and in your PATH
 - `.p4config` files in your project directories (recommended)
 
-### Quick Install
+### Quick Install with Claude Code
+
+```bash
+# Install the package globally
+npm install -g mcp-perforce
+
+# Add to Claude Code
+claude mcp add perforce mcp-perforce
+```
+
+That's it! Claude Code will automatically configure the server for you.
+
+### Manual Installation
+
+#### Via NPM (when published)
 
 ```bash
 npm install -g mcp-perforce
 ```
 
-### Install from Source
+#### Install from Source
 
 ```bash
-git clone https://github.com/yourusername/mcp-perforce.git
+git clone https://github.com/Cocoon-AI/mcp-perforce.git
 cd mcp-perforce
 npm install
 npm run build
@@ -216,7 +230,7 @@ To enable debug output, add to your configuration:
 ### Building from source
 
 ```bash
-git clone https://github.com/yourusername/mcp-perforce.git
+git clone https://github.com/Cocoon-AI/mcp-perforce.git
 cd mcp-perforce
 npm install
 npm run build
@@ -255,8 +269,8 @@ MIT License - see LICENSE file for details
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/mcp-perforce/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/mcp-perforce/discussions)
+- **Issues**: [GitHub Issues](https://github.com/Cocoon-AI/mcp-perforce/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Cocoon-AI/mcp-perforce/discussions)
 
 ---
 
