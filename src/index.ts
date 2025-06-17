@@ -7,12 +7,13 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { allTools } from './tools/index.js';
 import { handleToolCall } from './handlers/index.js';
+import { VERSION } from './version.js';
 
 // Create server instance
 const server = new Server(
   {
     name: 'mcp-perforce',
-    version: '1.0.0',
+    version: VERSION,
   },
   {
     capabilities: {

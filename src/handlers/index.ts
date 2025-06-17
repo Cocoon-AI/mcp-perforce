@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { handleAdd, handleEdit, handleDelete, handleRevert, handleSync, handleDiff } from './file-handlers.js';
 import { handleChangelistCreate, handleChangelistSubmit, handleMoveToChangelist } from './changelist-handlers.js';
-import { handleStatus, handleInfo } from './info-handlers.js';
+import { handleStatus, handleInfo, handleVersion } from './info-handlers.js';
 import { handleStreamList, handleStreamInfo, handleStreamSwitch, handleStreamCreate, handleStreamEdit, handleStreamGraph } from './stream-handlers.js';
 
 export async function handleToolCall(name: string, args: any) {
@@ -37,6 +37,8 @@ export async function handleToolCall(name: string, args: any) {
         return await handleStatus(args, workingDir);
       case 'p4_info':
         return await handleInfo(args, workingDir);
+      case 'mcp_perforce_version':
+        return await handleVersion();
       
       // Stream operations
       case 'p4_stream_list':

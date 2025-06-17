@@ -57,14 +57,43 @@ export async function handleStreamCreate(args: any, workingDir?: string) {
   const parent = z.string().optional().parse(args?.parent);
   const description = z.string().parse(args?.description);
   
-  // Build stream spec
-  let spec = `Stream: ${stream}\n\n`;
-  spec += `Type: ${type}\n\n`;
+  // Extract stream name from path (e.g., "//pa/vcpkg" -> "vcpkg")
+  const streamName = stream.split('/').pop() || stream;
+  
+  // Get current user for Owner field
+  const userResult = await p4Exec('p4 user -o', workingDir);
+  const userMatch = userResult.stdout.match(/^User:\s+(\S+)/m);
+  const owner = userMatch ? userMatch[1] : 'unknown';
+  
+  // Build stream spec following the template format
+  let spec = `Stream:\t${stream}\n\n`;
+  spec += `Owner:\t${owner}\n\n`;
+  spec += `Name:\t${streamName}\n\n`;
   if (parent && type !== 'mainline') {
-    spec += `Parent: ${parent}\n\n`;
+    spec += `Parent:\t${parent}\n\n`;
+  } else if (type === 'mainline') {
+    spec += `Parent:\tnone\n\n`;
   }
+  spec += `Type:\t${type}\n\n`;
   spec += `Description:\n\t${description.replace(/\n/g, '\n\t')}\n\n`;
-  spec += `Options:\n\tallsubmit unlocked notoparent nofromparent mergedown\n\n`;
+  
+  // Set appropriate options based on stream type
+  let options = 'allsubmit unlocked';
+  if (type === 'task') {
+    options += ' toparent fromparent mergedown';
+  } else if (type === 'development') {
+    options += ' toparent fromparent mergedown';
+  } else if (type === 'release') {
+    options += ' notoparent fromparent mergedown';
+  } else if (type === 'mainline') {
+    options += ' notoparent nofromparent mergedown';
+  }
+  spec += `Options:\t${options}\n\n`;
+  
+  if (parent && type !== 'mainline') {
+    spec += `ParentView:\tinherit\n\n`;
+  }
+  
   spec += `Paths:\n\tshare ...\n`;
   
   const { stdout, stderr } = await p4Exec(`echo '${spec}' | p4 stream -i`, workingDir);

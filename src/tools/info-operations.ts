@@ -27,4 +27,12 @@ export const infoOperationTools: ToolDefinition[] = [
       },
     },
   },
+  {
+    name: 'mcp_perforce_version',
+    description: 'Show MCP Perforce server version',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+    },
+  },
 ];
