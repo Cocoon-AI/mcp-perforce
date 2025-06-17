@@ -23,10 +23,10 @@ A Model Context Protocol (MCP) server that provides a clean interface for Perfor
 
 ```bash
 # Install the package globally
-npm install -g mcp-perforce
+npm install -g @cocoon-ai/mcp-perforce
 
 # Add to Claude Code
-claude mcp add perforce mcp-perforce
+claude mcp add perforce @cocoon-ai/mcp-perforce
 ```
 
 That's it! Claude Code will automatically configure the server for you.
@@ -36,7 +36,7 @@ That's it! Claude Code will automatically configure the server for you.
 #### Via NPM (when published)
 
 ```bash
-npm install -g mcp-perforce
+npm install -g @cocoon-ai/mcp-perforce
 ```
 
 #### Install from Source
@@ -64,7 +64,7 @@ Add the server to your Claude Desktop configuration file:
   "mcpServers": {
     "perforce": {
       "command": "npx",
-      "args": ["-y", "mcp-perforce"],
+      "args": ["-y", "@cocoon-ai/mcp-perforce"],
       "env": {
         "P4CONFIG": ".p4config"
       }
@@ -95,7 +95,7 @@ Now the MCP server will automatically use the correct Perforce settings based on
 
 Once configured, you can ask Claude to use these P4 operations. All commands will automatically use the `.p4config` settings from your current project directory.
 
-### Basic Operations
+### Basic File Operations
 
 - **`p4_status`**: Check workspace status and pending changes
   ```
@@ -118,9 +118,21 @@ Once configured, you can ask Claude to use these P4 operations. All commands wil
   "Delete the old_module.py file from Perforce"
   ```
 
-- **`p4_info`**: Show current Perforce configuration
+- **`p4_sync`**: Sync files from depot
   ```
-  "Show me which P4 server and workspace I'm using"
+  "Sync all files in the project"
+  "Force sync the src directory"
+  ```
+
+- **`p4_revert`**: Revert files or entire changelists
+  ```
+  "Revert all files in changelist 12345"
+  "Revert changes to config.json"
+  ```
+
+- **`p4_diff`**: Show differences for files
+  ```
+  "Show me the diff for all my open files"
   ```
 
 ### Changelist Operations
@@ -140,25 +152,45 @@ Once configured, you can ask Claude to use these P4 operations. All commands wil
   "Move all my open files to changelist 12345"
   ```
 
-### Sync and Revert
+### Stream Operations
 
-- **`p4_sync`**: Sync files from depot
+- **`p4_stream_list`**: List streams in a depot
   ```
-  "Sync all files in the project"
-  "Force sync the src directory"
-  ```
-
-- **`p4_revert`**: Revert files or entire changelists
-  ```
-  "Revert all files in changelist 12345"
-  "Revert changes to config.json"
+  "List all streams in //depot"
+  "Show me development streams matching 'feature'"
   ```
 
-### Other Operations
-
-- **`p4_diff`**: Show differences for files
+- **`p4_stream_info`**: Get detailed stream information
   ```
-  "Show me the diff for all my open files"
+  "Show me details about //depot/main stream"
+  ```
+
+- **`p4_stream_switch`**: Switch workspace to a different stream
+  ```
+  "Switch to the //depot/dev stream"
+  "Force switch to //depot/release-2.0"
+  ```
+
+- **`p4_stream_create`**: Create a new stream
+  ```
+  "Create a development stream //depot/feature-xyz from //depot/main"
+  ```
+
+- **`p4_stream_edit`**: Edit stream specification
+  ```
+  "Edit the //depot/feature-xyz stream spec"
+  ```
+
+- **`p4_stream_graph`**: Show stream hierarchy
+  ```
+  "Show the stream hierarchy for //depot"
+  ```
+
+### Information Operations
+
+- **`p4_info`**: Show current Perforce configuration
+  ```
+  "Show me which P4 server and workspace I'm using"
   ```
 
 ## Example Usage in Claude
@@ -185,7 +217,7 @@ Claude: I'll sync your workspace and check your open files...
 
 1. Restart Claude Desktop after modifying the configuration
 2. Check that the configuration file is valid JSON
-3. Verify the MCP server is installed: `npm list -g mcp-perforce`
+3. Verify the MCP server is installed: `npm list -g @cocoon-ai/mcp-perforce`
 
 ### Perforce authentication errors
 
@@ -215,7 +247,7 @@ To enable debug output, add to your configuration:
   "mcpServers": {
     "perforce": {
       "command": "npx",
-      "args": ["-y", "mcp-perforce"],
+      "args": ["-y", "@cocoon-ai/mcp-perforce"],
       "env": {
         "P4CONFIG": ".p4config",
         "DEBUG": "mcp:*"
@@ -244,9 +276,10 @@ npm test
 
 ### Adding new commands
 
-1. Add the tool definition in the `ListToolsRequestSchema` handler
-2. Add the implementation in the `CallToolRequestSchema` switch statement
-3. Follow the existing pattern for parameter validation and error handling
+1. Add the tool definition in the appropriate file under `src/tools/`
+2. Add the handler function in the corresponding file under `src/handlers/`
+3. Update the switch statement in `src/handlers/index.ts`
+4. Follow the existing pattern for parameter validation and error handling
 
 ## Contributing
 
