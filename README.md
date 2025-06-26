@@ -186,11 +186,52 @@ Once configured, you can ask Claude to use these P4 operations. All commands wil
   "Show the stream hierarchy for //depot"
   ```
 
+### Client/Workspace Operations
+
+- **`p4_client_list`**: List all clients/workspaces
+  ```
+  "List all my Perforce workspaces"
+  "Show clients for user jsmith"
+  ```
+
+- **`p4_client_info`**: Get client/workspace details
+  ```
+  "Show me details about my current workspace"
+  "Show info for client gamedev-workspace"
+  ```
+
+- **`p4_client_create`**: Create a new client/workspace
+  ```
+  "Create a new workspace called dev-feature in /home/user/p4/feature"
+  "Create a stream client for //depot/main-stream"
+  ```
+
+- **`p4_client_edit`**: Edit client specification
+  ```
+  "Edit the view mappings for client dev-workspace"
+  ```
+
+- **`p4_client_delete`**: Delete a client/workspace
+  ```
+  "Delete the old-feature workspace"
+  "Force delete the broken-client workspace"
+  ```
+
+- **`p4_client_switch`**: Switch to a different client
+  ```
+  "Switch to the production-client workspace"
+  ```
+
 ### Information Operations
 
 - **`p4_info`**: Show current Perforce configuration
   ```
   "Show me which P4 server and workspace I'm using"
+  ```
+
+- **`mcp_perforce_version`**: Show MCP Perforce server version
+  ```
+  "What version of mcp-perforce is running?"
   ```
 
 ## Example Usage in Claude

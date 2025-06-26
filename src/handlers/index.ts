@@ -3,6 +3,7 @@ import { handleAdd, handleEdit, handleDelete, handleRevert, handleSync, handleDi
 import { handleChangelistCreate, handleChangelistSubmit, handleMoveToChangelist } from './changelist-handlers.js';
 import { handleStatus, handleInfo, handleVersion } from './info-handlers.js';
 import { handleStreamList, handleStreamInfo, handleStreamSwitch, handleStreamCreate, handleStreamEdit, handleStreamGraph } from './stream-handlers.js';
+import { handleClientList, handleClientInfo, handleClientCreate, handleClientEdit, handleClientDelete, handleClientSwitch } from './client-handlers.js';
 
 export async function handleToolCall(name: string, args: any) {
   try {
@@ -53,6 +54,20 @@ export async function handleToolCall(name: string, args: any) {
         return await handleStreamEdit(args, workingDir);
       case 'p4_stream_graph':
         return await handleStreamGraph(args, workingDir);
+      
+      // Client operations
+      case 'p4_client_list':
+        return await handleClientList(args, workingDir);
+      case 'p4_client_info':
+        return await handleClientInfo(args, workingDir);
+      case 'p4_client_create':
+        return await handleClientCreate(args, workingDir);
+      case 'p4_client_edit':
+        return await handleClientEdit(args, workingDir);
+      case 'p4_client_delete':
+        return await handleClientDelete(args, workingDir);
+      case 'p4_client_switch':
+        return await handleClientSwitch(args, workingDir);
 
       default:
         throw new Error(`Unknown tool: ${name}`);
