@@ -1,6 +1,6 @@
 {
     "name": "@cocoon-ai/mcp-perforce",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "A Model Context Protocol (MCP) server that provides a clean interface for Perforce (P4) operations in Claude Desktop. This server wraps P4 commands to make them more reliable and easier for Claude to use, eliminating issues with interactive prompts and complex state management.",
     "main": "dist/index.js",
     "bin": {
