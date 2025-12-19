@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { handleAdd, handleEdit, handleDelete, handleRevert, handleSync, handleDiff } from './file-handlers.js';
 import { handleChangelistCreate, handleChangelistSubmit, handleMoveToChangelist } from './changelist-handlers.js';
-import { handleStatus, handleInfo, handleVersion } from './info-handlers.js';
+import { handleStatus, handleInfo, handleVersion, handleRawCommand } from './info-handlers.js';
 import { handleStreamList, handleStreamInfo, handleStreamSwitch, handleStreamCreate, handleStreamEdit, handleStreamGraph } from './stream-handlers.js';
 import { handleClientList, handleClientInfo, handleClientCreate, handleClientEdit, handleClientDelete, handleClientSwitch } from './client-handlers.js';
 
@@ -24,7 +24,7 @@ export async function handleToolCall(name: string, args: any) {
         return await handleSync(args, workingDir);
       case 'p4_diff':
         return await handleDiff(args, workingDir);
-      
+
       // Changelist operations
       case 'p4_changelist_create':
         return await handleChangelistCreate(args, workingDir);
@@ -32,7 +32,7 @@ export async function handleToolCall(name: string, args: any) {
         return await handleChangelistSubmit(args, workingDir);
       case 'p4_move_to_changelist':
         return await handleMoveToChangelist(args, workingDir);
-      
+
       // Info operations
       case 'p4_status':
         return await handleStatus(args, workingDir);
@@ -40,7 +40,9 @@ export async function handleToolCall(name: string, args: any) {
         return await handleInfo(args, workingDir);
       case 'mcp_perforce_version':
         return await handleVersion();
-      
+      case 'p4_raw_command':
+        return await handleRawCommand(args, workingDir);
+
       // Stream operations
       case 'p4_stream_list':
         return await handleStreamList(args, workingDir);
@@ -54,7 +56,7 @@ export async function handleToolCall(name: string, args: any) {
         return await handleStreamEdit(args, workingDir);
       case 'p4_stream_graph':
         return await handleStreamGraph(args, workingDir);
-      
+
       // Client operations
       case 'p4_client_list':
         return await handleClientList(args, workingDir);

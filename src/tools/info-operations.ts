@@ -35,4 +35,22 @@ export const infoOperationTools: ToolDefinition[] = [
       properties: {},
     },
   },
+  {
+    name: 'p4_raw_command',
+    description: 'FOR DEBUGGING: Executes a raw p4 command and returns stdout/stderr',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        command: {
+          type: 'string',
+          description: 'The full p4 command to run (e.g., \'p4 describe -s 1234\')',
+        },
+        path: {
+          type: 'string',
+          description: 'Working directory path (optional)',
+        },
+      },
+      required: ['command'],
+    },
+  },
 ];
